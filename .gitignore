@@ -1,0 +1,13 @@
+/bin/
+develop-eggs/
+*.egg-info/
+.installed.cfg
+*.pyc
+/build/
+/parts/
+/dist/
+/etc/supervisor.conf
+.project
+.pydevproject*
+*.log
+*.swp
