@@ -43,12 +43,12 @@ def post_make(options, buildout):
 
 def create_certificate(cert_dir, buildout):
     hostname = os.uname()[1].split('.')[0]
-    hostname_long = hostname + '.' + buildout['phx']['domain']
+    hostname_long = hostname + '.' + buildout['config']['domain']
     if not os.path.exists(cert_dir):
         os.makedirs(cert_dir)
     if not os.path.exists(cert_dir+'/cert.pem'):
         log.info('Creating apache ssl certificate')
-        cmd = 'openssl req -new -newkey rsa:1024 -keyout "%(cert)s" -out "%(cert)s" -days 3650 -nodes -x509 -subj "/C=DE/O=studiVZ/OU=engineering/CN=*.%(hostname_long)s" -batch' % dict(cert=cert_dir+'/cert.pem', hostname_long=hostname_long)
+        cmd = 'openssl req -new -newkey rsa:1024 -keyout "%(cert)s" -out "%(cert)s" -days 3650 -nodes -x509 -subj "/C=DE/O=devel/OU=engineering/CN=*.%(hostname_long)s" -batch' % dict(cert=cert_dir+'/cert.pem', hostname_long=hostname_long)
         pr = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
         if pr.wait() != 0:
             log.error(pr.stderr.read())

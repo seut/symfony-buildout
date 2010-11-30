@@ -36,9 +36,6 @@ def check_running_mysqld(port):
 def pre_configure(options, buildout):
     destination = options.get('compile-directory')
     os.chdir(destination)
-
-    copy_sphinx_plugin(options, buildout)
-
     log.info('Running autorun.sh')
     autorun_cmd = "sh BUILD/autorun.sh"
     pr = Popen(autorun_cmd, shell=True, stdout=PIPE, stderr=PIPE)
@@ -57,40 +54,6 @@ def post_make(options, buildout):
     fileinput.close()
 
 
-def copy_sphinx_plugin(options, buildout):
-    location = options.get('compile-directory')
-    sphinx_url = buildout['sphinx']['url']
-    #buildout['buildout'].setdefault(
-    #    'download-cache',
-    #    os.path.join(buildout['buildout']['directory'], 'downloads'))
-    #if not os.path.exists(self.buildout['buildout']['download-cache']):
-    #    os.makedirs(self.buildout['buildout']['download-cache'])
-
-
-    log.info('Downloading sphinx and copying the mysql plugin')
-    download = Download(buildout['buildout'])
-    path, is_temp = download(sphinx_url)
-
-    try:
-        # Extract the package
-        extract_dir = tempfile.mkdtemp("buildout-sphinx_mysql_plugin")
-        try:
-            setuptools.archive_util.unpack_archive(path, extract_dir)
-        except setuptools.archive_util.UnrecognizedFormat:
-            log.error('Unable to extract the package %s. Unknown format.', path)
-            raise zc.buildout.UserError('Package extraction error')
-
-        top_level_contents = os.listdir(extract_dir)
-        base = os.path.join(extract_dir, top_level_contents[0])
-
-        # Copy the mysql plugin
-        shutil.copytree(os.path.join(base, 'mysqlse'), os.path.join(location, 'storage', 'sphinx'))
-        # Delete sphinx source
-        shutil.rmtree(extract_dir)
-
-    finally:
-        if is_temp:
-            os.unlink(path)
 
 
 def setup_default_db(options, buildout):
