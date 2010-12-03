@@ -11,3 +11,6 @@ develop-eggs/
 .pydevproject*
 *.log
 *.swp
+/lib/
+/var/
+

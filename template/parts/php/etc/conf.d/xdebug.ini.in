@@ -1,0 +1,11 @@
+zend_extension = ${php:location}/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so
+xdebug.remote_enable = 1
+xdebug.remote_handler = dbgp
+xdebug.remote_mode = req
+xdebug.remote_port = 9000
+xdebug.remote_host = 127.0.0.1
+xdebug.remote_log = /private/tmp/xdebug_remote_debug
+xdebug.profiler_enable = 0
+xdebug.profiler_enable_trigger = 1
+xdebug.profiler_output_dir = /private/tmp/Xdebug
+xdebug.profiler_output_name = cachegrind.out.%s

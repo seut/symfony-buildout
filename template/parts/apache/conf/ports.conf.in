@@ -1,0 +1,9 @@
+
+Listen ${config:apache-port}
+
+NameVirtualHost *:${config:apache-port}
+
+<IfModule mod_ssl.c>
+    Listen ${config:apache-port-ssl}
+    NameVirtualHost *:${config:apache-port-ssl}
+</IfModule>

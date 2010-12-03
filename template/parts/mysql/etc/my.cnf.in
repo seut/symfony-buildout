@@ -1,0 +1,14 @@
+[client]
+port=${mysql:port}
+socket=${buildout:directory}/var/mysql/mysql.sock
+protocol=tcp
+
+[mysqld]
+port=${mysql:port}
+socket=${buildout:directory}/var/mysql/mysql.sock
+datadir=${buildout:directory}/var/mysql/db
+pid-file=${buildout:directory}/var/mysql/mysqld.pid
+language=${buildout:directory}/parts/mysql/share/mysql/english
+
+ignore-builtin-innodb
+plugin-load=innodb=ha_innodb_plugin.so
